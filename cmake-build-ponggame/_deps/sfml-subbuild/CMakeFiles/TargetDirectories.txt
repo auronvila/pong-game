@@ -1,0 +1,3 @@
+/Users/auronvila/Desktop/desktop/projects/cpp/pong-game/cmake-build-ponggame/_deps/sfml-subbuild/CMakeFiles/sfml-populate.dir
+/Users/auronvila/Desktop/desktop/projects/cpp/pong-game/cmake-build-ponggame/_deps/sfml-subbuild/CMakeFiles/edit_cache.dir
+/Users/auronvila/Desktop/desktop/projects/cpp/pong-game/cmake-build-ponggame/_deps/sfml-subbuild/CMakeFiles/rebuild_cache.dir
