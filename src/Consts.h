@@ -9,5 +9,6 @@ const float ARENA_WIDTH = 1180.f;
 const float ARENA_HEIGHT = 800.f;
 const float PLAYER_WIDTH = 20.f;
 const float PLAYER_HEIGHT = 100.f;
+const float BALL_RADIUS = 10.f;
 
 #endif //CONSTS_H

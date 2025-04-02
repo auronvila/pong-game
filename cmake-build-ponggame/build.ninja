@@ -63,6 +63,13 @@ build CMakeFiles/main.dir/src/Player.cpp.o: CXX_COMPILER__main_unscanned_Debug /
   OBJECT_DIR = CMakeFiles/main.dir
   OBJECT_FILE_DIR = CMakeFiles/main.dir/src
 
+build CMakeFiles/main.dir/src/Ball.cpp.o: CXX_COMPILER__main_unscanned_Debug /Users/auronvila/Desktop/desktop/projects/cpp/pong-game/src/Ball.cpp || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/src/Ball.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk -fcolor-diagnostics
+  INCLUDES = -isystem /opt/homebrew/opt/sfml/include
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target main
@@ -71,7 +78,7 @@ build CMakeFiles/main.dir/src/Player.cpp.o: CXX_COMPILER__main_unscanned_Debug /
 #############################################
 # Link the executable bin/main
 
-build bin/main: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/src/main.cpp.o CMakeFiles/main.dir/src/Player.cpp.o | /opt/homebrew/opt/sfml/lib/libsfml-graphics.3.0.0.dylib /opt/homebrew/opt/sfml/lib/libsfml-window.3.0.0.dylib /opt/homebrew/opt/sfml/lib/libsfml-system.3.0.0.dylib
+build bin/main: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/src/main.cpp.o CMakeFiles/main.dir/src/Player.cpp.o CMakeFiles/main.dir/src/Ball.cpp.o | /opt/homebrew/opt/sfml/lib/libsfml-graphics.3.0.0.dylib /opt/homebrew/opt/sfml/lib/libsfml-window.3.0.0.dylib /opt/homebrew/opt/sfml/lib/libsfml-system.3.0.0.dylib
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk
   LINK_FLAGS = -L/usr/local/opt/icu4c/lib
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/sfml/lib  /opt/homebrew/opt/sfml/lib/libsfml-graphics.3.0.0.dylib  /opt/homebrew/opt/sfml/lib/libsfml-window.3.0.0.dylib  /opt/homebrew/opt/sfml/lib/libsfml-system.3.0.0.dylib

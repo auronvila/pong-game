@@ -11,6 +11,10 @@ find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
 add_executable(main
         src/main.cpp
         src/Player.cpp
+
+        src/Ball.cpp
+        src/Ball.h
+
         src/Arena.h
         src/Consts.h
 )

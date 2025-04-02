@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Arena.h"
+#include "Ball.h"
 #include "Player.h"
 #include"Consts.h"
 
 int main() {
+    srand(time(0));
     auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "Pong Game");
     window.setFramerateLimit(144);
 
@@ -22,6 +23,11 @@ int main() {
 
     Player playerOne = Player(player_pos, player_color);
     const sf::RectangleShape arena = CreateArena(window.getSize());
+
+    float ballPosX = arena.getPosition().x + (ARENA_WIDTH / 2) - BALL_RADIUS;
+    float ballPosY = arena.getPosition().y + (ARENA_HEIGHT / 2) - BALL_RADIUS;
+    Ball ball = Ball({ballPosX, ballPosY}, {255, 255, 255});
+    ball.InitialVelocity();
 
     // * game loop
     while (window.isOpen()) {
@@ -41,7 +47,10 @@ int main() {
         window.clear();
         // ? draw elements here
         window.draw(arena);
+        ball.draw(window);
         playerOne.draw(window);
+        ball.MoveBall();
+
 
         window.display();
     }
