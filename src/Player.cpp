@@ -31,6 +31,11 @@ void Player::draw(sf::RenderWindow &window) {
     window.draw(shape);
 }
 
-sf::FloatRect Player::getBounds() const {
+sf::FloatRect Player::getGlobalBounds() const {
     return shape.getGlobalBounds();
 }
+
+sf::RectangleShape &Player::getShape() {
+    return shape;
+}
+

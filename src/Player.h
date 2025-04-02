@@ -19,7 +19,9 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-    sf::FloatRect getBounds() const;
+    sf::FloatRect getGlobalBounds() const;
+
+    sf::RectangleShape &getShape();
 };
 
 #endif //PLAYER_H

@@ -27,7 +27,7 @@ int main() {
     float ballPosX = arena.getPosition().x + (ARENA_WIDTH / 2) - BALL_RADIUS;
     float ballPosY = arena.getPosition().y + (ARENA_HEIGHT / 2) - BALL_RADIUS;
     Ball ball = Ball({ballPosX, ballPosY}, {255, 255, 255});
-    ball.InitialVelocity();
+    ball.initialVelocity();
 
     // * game loop
     while (window.isOpen()) {
@@ -41,7 +41,7 @@ int main() {
         if (isKeyPressed(sf::Keyboard::Key::Up)) {
             playerOne.move(-2.0f, arena.getSize(), arena.getPosition());
         } else if (isKeyPressed(sf::Keyboard::Key::Down)) {
-            playerOne.move(2.0, arena.getSize(), arena.getPosition());
+            playerOne.move(2.0f, arena.getSize(), arena.getPosition());
         }
 
         window.clear();
@@ -49,7 +49,8 @@ int main() {
         window.draw(arena);
         ball.draw(window);
         playerOne.draw(window);
-        ball.MoveBall(arena);
+        ball.detectCollisionWithPaddle(playerOne.getShape());
+        ball.moveBall(arena);
 
 
         window.display();

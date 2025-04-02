@@ -18,9 +18,11 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-    void MoveBall(const sf::RectangleShape &arena);
+    void moveBall(const sf::RectangleShape &arena);
 
-    void InitialVelocity();
+    void initialVelocity();
+
+    void detectCollisionWithPaddle(sf::RectangleShape &paddle);
 };
 
 #endif //BALL_H
