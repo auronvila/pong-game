@@ -15,14 +15,20 @@ int main() {
     const float screenHeight = static_cast<float>(windowSize.y);
 
     sf::Color player_color = sf::Color{100, 250, 0};
-
-    sf::Vector2f player_pos(
+    sf::Vector2f player_one_pos(
         screenWidth - PLAYER_WIDTH - 200.0f,
         (screenHeight - PLAYER_HEIGHT) / 2.0f
     );
 
-    Player playerOne = Player(player_pos, player_color);
-    const sf::RectangleShape arena = CreateArena(window.getSize());
+    sf::Vector2f ai_player_pos(
+        200.0f,
+        (screenHeight - PLAYER_HEIGHT) / 2.0f
+    );
+
+
+    Player playerOne = Player(player_one_pos, player_color);
+    Player aiPlayer = Player(ai_player_pos, player_color);
+    sf::RectangleShape arena = CreateArena(window.getSize());
 
     Scoreboard scoreboard(screenWidth);
     float ballPosX = arena.getPosition().x + (ARENA_WIDTH / 2) - BALL_RADIUS;
@@ -49,9 +55,15 @@ int main() {
         // ? draw elements here
         window.draw(arena);
         ball.draw(window);
+
         playerOne.draw(window);
-        ball.detectCollisionWithPaddle(playerOne.getShape());
+        aiPlayer.draw(window);
+        aiPlayer.customAiMovement(ball, arena);
+
         ball.moveBall(arena, scoreboard);
+        ball.detectCollisionWithPaddle(playerOne.getShape());
+        ball.detectCollisionWithPaddle(aiPlayer.getShape());
+
         scoreboard.drawText(window);
 
         window.display();

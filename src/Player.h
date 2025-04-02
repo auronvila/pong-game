@@ -6,6 +6,8 @@
 #define PLAYER_H
 #include <SFML/Graphics.hpp>
 
+#include "Ball.h"
+
 
 class Player {
     sf::RectangleShape shape;
@@ -22,6 +24,8 @@ public:
     sf::FloatRect getGlobalBounds() const;
 
     sf::RectangleShape &getShape();
+
+    void customAiMovement(const Ball& ball, sf::RectangleShape& arena);
 };
 
 #endif //PLAYER_H

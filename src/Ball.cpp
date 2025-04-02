@@ -34,15 +34,14 @@ void Ball::moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard) {
     if (ball_right > arena_right) {
         velocity.x = -velocity.x;
 
-        // todo update the score
         resetGame(initial_ball_pos_x, initial_ball_pos_y);
-        sf::Text scoreStr = scoreboard.getAiScore();
         const int currentScore = std::stoi(scoreboard.getAiScore().getString().toAnsiString());
         scoreboard.updateAiScore(currentScore + 1);
 
         // Player scores (right player)
     } else if (ball_left < arena_left) {
         velocity.x = -velocity.x;
+
         const int currentScore = std::stoi(scoreboard.getPlayerOneScore().getString().toAnsiString());
         scoreboard.updatePlayerOneScore(currentScore + 1);
         resetGame(initial_ball_pos_x, initial_ball_pos_y);
@@ -76,12 +75,14 @@ void Ball::detectCollisionWithPaddle(sf::RectangleShape &paddle) {
     }
 }
 
+float Ball::getYPos() const {
+    return shape.getPosition().y;
+}
+
 Ball::Ball(sf::Vector2<float> position, sf::Color color) {
     shape.setPosition(position);
     shape.setFillColor(color);
     shape.setRadius(BALL_RADIUS);
-
-    // collision detection
 }
 
 Ball::~Ball() = default;

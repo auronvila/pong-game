@@ -22,6 +22,8 @@ public:
 
     void detectCollisionWithPaddle(sf::RectangleShape &paddle);
 
+    float getYPos() const;
+
 private:
     sf::CircleShape shape;
     sf::Vector2f velocity;

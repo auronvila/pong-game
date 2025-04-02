@@ -7,7 +7,7 @@
 
 
 Player::Player(sf::Vector2f position, sf::Color color) {
-    shape.setSize({PLAYER_WIDTH,PLAYER_HEIGHT});
+    shape.setSize({PLAYER_WIDTH, PLAYER_HEIGHT});
     shape.setPosition(position);
     shape.setFillColor(color);
 }
@@ -39,3 +39,13 @@ sf::RectangleShape &Player::getShape() {
     return shape;
 }
 
+void Player::customAiMovement(const Ball &ball, sf::RectangleShape &arena) {
+    float ball_y_pos = ball.getYPos();
+    float ai_paddle_pos_y = shape.getPosition().y;
+
+    if (ball_y_pos > ai_paddle_pos_y) {
+        shape.move({0, 2.0f});
+    } else {
+        shape.move({0, -2.0f});
+    }
+}
