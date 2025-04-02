@@ -6,7 +6,7 @@
 #include"Consts.h"
 #include<iostream>
 
-void Ball::moveBall(const sf::RectangleShape &arena) {
+void Ball::moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard) {
     shape.move(velocity);
 
     sf::FloatRect ballBounds = shape.getGlobalBounds();
@@ -27,14 +27,25 @@ void Ball::moveBall(const sf::RectangleShape &arena) {
         velocity.y = -velocity.y;
     }
 
-    if (ball_right > arena_right || ball_left < arena_left) {
+    float initial_ball_pos_x = arena.getPosition().x + (ARENA_WIDTH / 2) - BALL_RADIUS;
+    float initial_ball_pos_y = arena.getPosition().y + (ARENA_HEIGHT / 2) - BALL_RADIUS;
+
+    // AI scores (left player)
+    if (ball_right > arena_right) {
         velocity.x = -velocity.x;
 
-        // todo reset the game and update the score
-        float initial_ball_pos_x = arena.getPosition().x + (ARENA_WIDTH / 2) - BALL_RADIUS;
-        float initial_ball_pos_y = arena.getPosition().y + (ARENA_HEIGHT / 2) - BALL_RADIUS;
-        shape.setPosition({initial_ball_pos_x, initial_ball_pos_y});
-        initialVelocity();
+        // todo update the score
+        resetGame(initial_ball_pos_x, initial_ball_pos_y);
+        sf::Text scoreStr = scoreboard.getAiScore();
+        const int currentScore = std::stoi(scoreboard.getAiScore().getString().toAnsiString());
+        scoreboard.updateAiScore(currentScore + 1);
+
+        // Player scores (right player)
+    } else if (ball_left < arena_left) {
+        velocity.x = -velocity.x;
+        const int currentScore = std::stoi(scoreboard.getPlayerOneScore().getString().toAnsiString());
+        scoreboard.updatePlayerOneScore(currentScore + 1);
+        resetGame(initial_ball_pos_x, initial_ball_pos_y);
     }
 }
 
@@ -48,15 +59,15 @@ void Ball::initialVelocity() {
     }
 }
 
-void Ball::detectCollisionWithPaddle(sf::RectangleShape& paddle) {
-    float paddleTop = paddle.getPosition().y;
-    float paddleHeight = paddle.getSize().y;
-    float paddleCenterY = paddleTop + (paddleHeight / 2.f);
+void Ball::detectCollisionWithPaddle(sf::RectangleShape &paddle) {
+    const float paddleTop = paddle.getPosition().y;
+    const float paddleHeight = paddle.getSize().y;
+    const float paddleCenterY = paddleTop + (paddleHeight / 2.f);
 
-    sf::FloatRect ballGlobalBound = shape.getGlobalBounds();
-    float ballCenterY = ballGlobalBound.position.y + (ballGlobalBound.size.y / 2.f);
+    const sf::FloatRect ballGlobalBound = shape.getGlobalBounds();
+    const float ballCenterY = ballGlobalBound.position.y + (ballGlobalBound.size.y / 2.f);
 
-    float offset = ballCenterY - paddleCenterY;
+    const float offset = ballCenterY - paddleCenterY;
 
 
     if (ballGlobalBound.findIntersection(paddle.getGlobalBounds())) {
@@ -77,4 +88,9 @@ Ball::~Ball() = default;
 
 void Ball::draw(sf::RenderWindow &window) {
     window.draw(shape);
+}
+
+void Ball::resetGame(float initialBallPosX, float initialBallPosY) {
+    shape.setPosition({initialBallPosX, initialBallPosY});
+    initialVelocity();
 }

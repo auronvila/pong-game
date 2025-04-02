@@ -6,11 +6,9 @@
 #define BALL_H
 #include <SFML/Graphics.hpp>
 
-class Ball {
-private:
-    sf::CircleShape shape;
-    sf::Vector2f velocity;
+#include "Scoreboard.h"
 
+class Ball {
 public:
     Ball(sf::Vector2<float> position, sf::Color color);
 
@@ -18,11 +16,18 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-    void moveBall(const sf::RectangleShape &arena);
+    void moveBall(const sf::RectangleShape &arena,Scoreboard& scoreboard);
 
     void initialVelocity();
 
     void detectCollisionWithPaddle(sf::RectangleShape &paddle);
+
+private:
+    sf::CircleShape shape;
+    sf::Vector2f velocity;
+
+    void resetGame(float initialBallPosX, float initialBallPosY);
 };
+
 
 #endif //BALL_H

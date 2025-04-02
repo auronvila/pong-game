@@ -3,6 +3,7 @@
 #include "Ball.h"
 #include "Player.h"
 #include"Consts.h"
+#include "Scoreboard.h"
 
 int main() {
     srand(time(0));
@@ -12,7 +13,6 @@ int main() {
     sf::Vector2u windowSize = window.getSize();
     const float screenWidth = static_cast<float>(windowSize.x);
     const float screenHeight = static_cast<float>(windowSize.y);
-
 
     sf::Color player_color = sf::Color{100, 250, 0};
 
@@ -24,10 +24,12 @@ int main() {
     Player playerOne = Player(player_pos, player_color);
     const sf::RectangleShape arena = CreateArena(window.getSize());
 
+    Scoreboard scoreboard(screenWidth);
     float ballPosX = arena.getPosition().x + (ARENA_WIDTH / 2) - BALL_RADIUS;
     float ballPosY = arena.getPosition().y + (ARENA_HEIGHT / 2) - BALL_RADIUS;
     Ball ball = Ball({ballPosX, ballPosY}, {255, 255, 255});
     ball.initialVelocity();
+
 
     // * game loop
     while (window.isOpen()) {
@@ -36,7 +38,6 @@ int main() {
                 window.close();
             }
         }
-
 
         if (isKeyPressed(sf::Keyboard::Key::Up)) {
             playerOne.move(-2.0f, arena.getSize(), arena.getPosition());
@@ -50,8 +51,8 @@ int main() {
         ball.draw(window);
         playerOne.draw(window);
         ball.detectCollisionWithPaddle(playerOne.getShape());
-        ball.moveBall(arena);
-
+        ball.moveBall(arena, scoreboard);
+        scoreboard.drawText(window);
 
         window.display();
     }

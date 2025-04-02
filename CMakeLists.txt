@@ -15,6 +15,9 @@ add_executable(main
         src/Ball.cpp
         src/Ball.h
 
+        src/Scoreboard.cpp
+        src/Scoreboard.h
+
         src/Arena.h
         src/Consts.h
 )
