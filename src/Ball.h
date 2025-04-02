@@ -18,7 +18,7 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-    void MoveBall();
+    void MoveBall(const sf::RectangleShape &arena);
 
     void InitialVelocity();
 };

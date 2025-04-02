@@ -49,7 +49,7 @@ int main() {
         window.draw(arena);
         ball.draw(window);
         playerOne.draw(window);
-        ball.MoveBall();
+        ball.MoveBall(arena);
 
 
         window.display();
