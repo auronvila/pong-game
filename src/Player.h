@@ -25,7 +25,7 @@ public:
 
     sf::RectangleShape &getShape();
 
-    void customAiMovement(const Ball& ball, sf::RectangleShape& arena);
+    void customAiMovement(const Ball& ball, const sf::RectangleShape& arena);
 };
 
 #endif //PLAYER_H

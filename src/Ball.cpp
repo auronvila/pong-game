@@ -6,7 +6,9 @@
 #include"Consts.h"
 #include<iostream>
 
-void Ball::moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard) {
+void Ball::moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard,float& currentBallSpeed,sf::Clock& gameClock) {
+    sf::Vector2f direction = normalize(velocity);
+    velocity = direction * currentBallSpeed;
     shape.move(velocity);
 
     sf::FloatRect ballBounds = shape.getGlobalBounds();
@@ -34,7 +36,7 @@ void Ball::moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard) {
     if (ball_right > arena_right) {
         velocity.x = -velocity.x;
 
-        resetGame(initial_ball_pos_x, initial_ball_pos_y);
+        resetGame(initial_ball_pos_x, initial_ball_pos_y, gameClock);
         const int currentScore = std::stoi(scoreboard.getAiScore().getString().toAnsiString());
         scoreboard.updateAiScore(currentScore + 1);
 
@@ -44,18 +46,32 @@ void Ball::moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard) {
 
         const int currentScore = std::stoi(scoreboard.getPlayerOneScore().getString().toAnsiString());
         scoreboard.updatePlayerOneScore(currentScore + 1);
-        resetGame(initial_ball_pos_x, initial_ball_pos_y);
+        resetGame(initial_ball_pos_x, initial_ball_pos_y, gameClock);
     }
 }
 
 void Ball::initialVelocity() {
     float randomNum = rand() % 2;
+    speed = 2.0f;
 
     if (randomNum == 0) {
-        velocity = {10.0f, 1.0f};
+        velocity = {4.0f, 1.0f};
     } else {
-        velocity = {-10.0f, 1.0f};
+        velocity = {-4.0f, 1.0f};
     }
+}
+
+sf::Vector2f Ball::normalize(const sf::Vector2f& v) {
+    float length = std::sqrt(v.x * v.x + v.y * v.y);
+    if (length != 0)
+        return v / length;
+    else
+        return {0.f, 0.f};
+}
+
+
+sf::Vector2f Ball::getInitialVelocity() {
+    return sf::Vector2f({4.0f,1.0f});
 }
 
 void Ball::detectCollisionWithPaddle(sf::RectangleShape &paddle) {
@@ -91,7 +107,8 @@ void Ball::draw(sf::RenderWindow &window) {
     window.draw(shape);
 }
 
-void Ball::resetGame(float initialBallPosX, float initialBallPosY) {
+void Ball::resetGame(float initialBallPosX, float initialBallPosY, sf::Clock& gameClock) {
+    gameClock.reset();
     shape.setPosition({initialBallPosX, initialBallPosY});
     initialVelocity();
 }

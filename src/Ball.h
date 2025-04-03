@@ -16,9 +16,13 @@ public:
 
     void draw(sf::RenderWindow &window);
 
-    void moveBall(const sf::RectangleShape &arena,Scoreboard& scoreboard);
+    void moveBall(const sf::RectangleShape &arena, Scoreboard &scoreboard, float &currentBallSpeed, sf::Clock &gameClock);
 
     void initialVelocity();
+
+    sf::Vector2f normalize(const sf::Vector2f &v);
+
+    sf::Vector2f getInitialVelocity();
 
     void detectCollisionWithPaddle(sf::RectangleShape &paddle);
 
@@ -27,9 +31,11 @@ public:
 private:
     sf::CircleShape shape;
     sf::Vector2f velocity;
+    float speed;
 
-    void resetGame(float initialBallPosX, float initialBallPosY);
+    void resetGame(float initialBallPosX, float initialBallPosY, sf::Clock &gameClock);
 };
+
 
 
 #endif //BALL_H

@@ -39,13 +39,19 @@ sf::RectangleShape &Player::getShape() {
     return shape;
 }
 
-void Player::customAiMovement(const Ball &ball, sf::RectangleShape &arena) {
+void Player::customAiMovement(const Ball &ball, const sf::RectangleShape &arena) {
     float ball_y_pos = ball.getYPos();
     float ai_paddle_pos_y = shape.getPosition().y;
+    const float y_movement = 2.0f;
 
-    if (ball_y_pos > ai_paddle_pos_y) {
-        shape.move({0, 2.0f});
-    } else {
-        shape.move({0, -2.0f});
+    float top_limit = arena.getPosition().y;
+    float bottom_limit = arena.getPosition().y + arena.getSize().y;
+    float futureTopPos = shape.getPosition().y + y_movement;
+    float futureBottomPos = shape.getPosition().y + PLAYER_HEIGHT + y_movement;
+
+    if (ball_y_pos > ai_paddle_pos_y && futureBottomPos <= bottom_limit) {
+        shape.move({0, y_movement});
+    } else if (ball_y_pos < ai_paddle_pos_y && futureTopPos >= top_limit) {
+        shape.move({0, -y_movement});
     }
 }

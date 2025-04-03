@@ -3,7 +3,7 @@
 //
 #include"Consts.h"
 
-sf::RectangleShape CreateArena(sf::Vector2u windowSize) {
+inline sf::RectangleShape CreateArena(sf::Vector2u windowSize) {
     sf::Vector2f arenaSize(ARENA_WIDTH, ARENA_HEIGHT);
 
     sf::Vector2f arenaPos(

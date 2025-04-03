@@ -12,6 +12,9 @@ add_executable(main
         src/main.cpp
         src/Player.cpp
 
+        src/Game.cpp
+        src/Game.h
+
         src/Ball.cpp
         src/Ball.h
 

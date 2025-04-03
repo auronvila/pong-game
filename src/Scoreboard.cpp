@@ -7,11 +7,11 @@
 #include "Scoreboard.h"
 #include<iostream>
 
-Scoreboard::Scoreboard(const float &screenWidth) {
+Scoreboard::Scoreboard(float screenWidth) {
     if (!m_font.openFromFile("assets/fonts/Roboto/static/Roboto-Regular.ttf")) {
-        std::cout << "Error while loading the font!!";
+        std::cerr << "Font loading failed. Exiting..." << std::endl;
+        std::exit(EXIT_FAILURE); // force exit if font fails to load
     }
-
 
     m_playerOneScore = std::make_unique<sf::Text>(m_font, "0", 40);
     m_aiScore = std::make_unique<sf::Text>(m_font, "0", 40);
@@ -42,4 +42,9 @@ void Scoreboard::updatePlayerOneScore(const int score) {
 
 void Scoreboard::updateAiScore(int score) {
     m_aiScore->setString(std::to_string(score));
+}
+
+void Scoreboard::setPosition(float screenWidth) const {
+    m_playerOneScore->setPosition({screenWidth * 0.75f, 50});
+    m_aiScore->setPosition({screenWidth * 0.25f, 50});
 }

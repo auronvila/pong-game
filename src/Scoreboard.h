@@ -7,7 +7,7 @@
 
 class Scoreboard {
 public:
-    Scoreboard(const float &screenWidth);
+    Scoreboard(float screenWidth);
 
     ~Scoreboard();
 
@@ -22,6 +22,8 @@ public:
 
     void updatePlayerOneScore(int score);
     void updateAiScore(int score);
+
+    void setPosition(float screenWidth) const;
 
 private:
     sf::Font m_font;
