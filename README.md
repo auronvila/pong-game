@@ -59,6 +59,8 @@ cmake --build build
 
 
 # Build Instructions (Command Line)
+> ⚠️ **Warning:** The porject is tested in mac so if you are having trouble running or building the project in other operating systems please open an issue, I would be happy to help.
+
 ```bash
 # Create build directory 
 mkdir build && cd build
