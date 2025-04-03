@@ -3,6 +3,7 @@
 //
 #include"Game.h"
 
+
 Game::Game()
     : ball({0.f, 0.f}, sf::Color::White),
       playerOne({0.f, 0.f}, sf::Color::Green),
@@ -11,7 +12,8 @@ Game::Game()
 
 
 void Game::run() {
-    init();
+    srand(time(0));
+    initWindow();
 
     // * game loop
     while (window.isOpen()) {
@@ -21,22 +23,37 @@ void Game::run() {
             }
         }
 
-        handleInput();
-        handleAiPlayerMovement();
-        update();
-        handleEvents();
-        render();
+        switch (gameState) {
+            case GameState::START_MENU:
+                updateStartMenuTextPos();
+                handleStartMenuKeyPress();
+                renderStartMenu();
+                break;
+            case GameState::PLAYING:
+                if (gameAdjusted) {
+                    initGame();
+                    gameAdjusted = false;
+                }
+                handleInput();
+                handleAiPlayerMovement();
+                update();
+                handleEvents();
+                renderGame();
+                break;
+            case GameState::PAUSED:
+                break;
+            case GameState::GAME_OVER:
+                break;
+        }
     }
 }
 
-
-void Game::init() {
-    srand(time(0));
-    gameClock.start();
-
+void Game::initWindow() {
     window.create(sf::VideoMode({1920u, 1080u}), "Pong Game");
     window.setFramerateLimit(144);
+}
 
+void Game::initGame() {
     arena = CreateArena(window.getSize());
 
     const float screenWidth = static_cast<float>(window.getSize().x);
@@ -62,7 +79,6 @@ void Game::init() {
     scoreboard = std::make_unique<Scoreboard>(screenWidth);
 }
 
-
 void Game::handleEvents() {
     ball.detectCollisionWithPaddle(playerOne.getShape());
     ball.detectCollisionWithPaddle(aiPlayer.getShape());
@@ -82,6 +98,7 @@ void Game::handleInput() {
 }
 
 void Game::update() {
+    gameClock.start();
     const float elapsedTime = gameClock.getElapsedTime().asSeconds();
     const float speedMultiplier = 1.0f + (elapsedTime / SPEED_SCALE_INTERVAL);
 
@@ -90,13 +107,30 @@ void Game::update() {
     ball.moveBall(arena, *scoreboard, currentBallSpeed, gameClock);
 }
 
-void Game::render() {
+void Game::renderGame() {
     window.clear();
     window.draw(arena);
     playerOne.draw(window);
     aiPlayer.draw(window);
     ball.draw(window);
     scoreboard->drawText(window);
+    window.display();
+}
+
+void Game::updateStartMenuTextPos() const {
+    startMenu.setTextPosition(window.getSize().x, window.getSize().y);
+}
+
+void Game::handleStartMenuKeyPress() {
+    if (isKeyPressed(sf::Keyboard::Key::Enter)) {
+        gameState = GameState::PLAYING;
+        gameAdjusted = true;
+    }
+}
+
+void Game::renderStartMenu() {
+    window.clear();
+    startMenu.renderStartMenu(window);
     window.display();
 }
 
